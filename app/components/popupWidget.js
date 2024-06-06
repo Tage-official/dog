@@ -112,6 +112,9 @@ const PopupWidget = () => {
                   <p className="text-white opacity-50">
                     Мы обычно отвечаем в течении нескольких часов
                   </p>
+                  <p className="text-white opacity-50">
+                    Также если вы хотите оставить отзыв, то можете сделать это здесь!
+                  </p>
                 </div>
                 <div className="flex-grow h-full p-6 overflow-auto bg-gray-50 ">
                   {!isSubmitSuccessful && (

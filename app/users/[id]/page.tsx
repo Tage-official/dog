@@ -4,7 +4,13 @@ import LatestIssues from './LatestIssues';
 import IssueChart from './IssueChart';
 import { Flex, Grid } from '@radix-ui/themes';
 import { notFound } from 'next/navigation';
-import { cache } from 'react';
+import { cache, useState } from 'react';
+import React from "react";
+import { useForm } from 'react-hook-form';
+import { Button, Callout, TextField } from '@radix-ui/themes';
+import { Spinner } from '@/app/components';
+import DescPage from './Description';
+
 
 interface Props {
   params: { id: string };
@@ -27,6 +33,7 @@ export default async function UserPage({ params }: Props) {
     where: { status: 'CLOSED', assignedToUserId: user.id },
   });
 
+
   return (
     <Grid columns={{ initial: '1', md: '2' }} gap="5">
       <Flex direction="column" gap="5">
@@ -42,6 +49,7 @@ export default async function UserPage({ params }: Props) {
         />
       </Flex>
       <LatestIssues user={user} />
+      {/* <DescPage></DescPage> */}
     </Grid>
   );
 }
