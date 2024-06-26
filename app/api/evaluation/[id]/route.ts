@@ -22,7 +22,7 @@ export async function POST(
   const targetUser = await prisma.user.findUnique({
     where: { id: params.id },
   });
-  if (!targetUser) return NextResponse.json({}, { status: 404, message: "User not found" });
+  if (!targetUser) return NextResponse.json({}, { status: 404 });
 
   // Добавляем новую оценку
   const newEvaluation = await prisma.evaluation.create({
