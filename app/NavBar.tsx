@@ -44,6 +44,7 @@ const NavLinks = () => {
   const links = [
     { label: "Информационная панель", href: "/dashboard" },
     { label: "Заказы", href: "/issues/list" },
+    { label: "Верифицированные пользователи", href: "/verifiedUsers" },
   ];
 
   return (

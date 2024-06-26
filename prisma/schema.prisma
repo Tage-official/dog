@@ -26,6 +26,7 @@ model Issue {
   assignedToUserId String?    @db.VarChar(255)
   assignedToUser   User?      @relation(name: "AssignedToUser", fields: [assignedToUserId], references: [id])
   assignedRequests Request[]  @relation(name: "AssignedToIssue")
+  evalutaion       String?    @db.VarChar(255)
 }
 
 model Request {
@@ -84,7 +85,19 @@ model User {
   assignedIssues  Issue[]   @relation(name: "UserCreated")
   createdIssues   Issue[]   @relation(name: "AssignedToUser")
   createdRequests Request[] @relation(name: "RequestCreated")
+  dogDesc         String?   
+  eval            String?      
+  isVerified      Boolean  @default(false)      
+  evaluations     Evaluation[]
 }
+
+model Evaluation {
+  id        Int    @id @default(autoincrement())
+  value     String
+  userId    String
+  user      User   @relation(fields: [userId], references: [id])
+}
+
 
 model VerificationToken {
   identifier String

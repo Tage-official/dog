@@ -80,6 +80,9 @@ const RequestForm = ({ issue, request }: { issue: Issue, request?: Request }) =>
           )}
         />
         <ErrorMessage>{errors.description?.message}</ErrorMessage>
+      <div>
+        <p>Учтите! Чтобы легально выполнять заказы, вы должны быть оформлены как самозанятый согласно закону Республики Беларусь!</p>
+      </div>
         <Button disabled={isSubmitting}>
           {request ? 'Обновить Запрос' : 'Создать Запрос'}{' '}
           {isSubmitting && <Spinner />}

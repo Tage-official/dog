@@ -23,7 +23,7 @@ const AssigneeSelect = ({ userId, issueId }: { userId: string; issueId: string }
   return (
     <>
       <Button onClick={assignIssue}>
-        Assign
+        Выбрать
       </Button>
       <Toaster />
     </>

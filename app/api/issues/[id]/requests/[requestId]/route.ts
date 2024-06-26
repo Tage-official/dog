@@ -22,19 +22,13 @@ export async function PATCH(
     where: { id: parseInt(params.id) },
   });
   if (!issue)
-    return NextResponse.json(
-      { error: "Неверный заказ" },
-      { status: 404 }
-    );
+    return NextResponse.json({ error: "Неверный заказ" }, { status: 404 });
 
   const issueRequest = await prisma.request.findUnique({
     where: { id: parseInt(params.requestId) },
   });
   if (!issueRequest)
-    return NextResponse.json(
-      { error: "Неверный запрос" },
-      { status: 404 }
-    );
+    return NextResponse.json({ error: "Неверный запрос" }, { status: 404 });
 
   const updatedRequest = await prisma.request.update({
     where: { id: issueRequest.id },

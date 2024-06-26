@@ -10,12 +10,14 @@ import { useForm } from 'react-hook-form';
 import { Button, Callout, TextField } from '@radix-ui/themes';
 import { Spinner } from '@/app/components';
 import DescPage from './Description';
+import SectionTitle from '@/app/components/sectionTitle';
+import EvaluationPage from './Evaluation';
+import VerificationProfile from './VerificationProfile';
 
 
 interface Props {
-  params: { id: string };
+  params: { id: any };
 }
-
 const fetchUser = cache((userId: string) => prisma.user.findUnique({ where: { id: userId } }));
 
 export default async function UserPage({ params }: Props) {
@@ -36,6 +38,14 @@ export default async function UserPage({ params }: Props) {
 
   return (
     <Grid columns={{ initial: '1', md: '2' }} gap="5">
+      {/* <SectionTitle
+        pretitle="Личные данные">
+        Имя:
+        Email:
+</SectionTitle> */}
+
+      {/* <VerificationProfile user={user} params={params.id}></VerificationProfile> */}
+
       <Flex direction="column" gap="5">
         <IssueSummary
           open={open}
@@ -49,10 +59,14 @@ export default async function UserPage({ params }: Props) {
         />
       </Flex>
       <LatestIssues user={user} />
-      {/* <DescPage></DescPage> */}
+      <DescPage user={user} params={params.id}></DescPage>
+      <EvaluationPage user={user} params={params.id}></EvaluationPage>
+      <VerificationProfile user={user} params={params.id}></VerificationProfile>
     </Grid>
   );
 }
+
+
 
 export async function generateMetadata({ params }: Props) {
   const user = await fetchUser(params.id);

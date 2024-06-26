@@ -8,10 +8,11 @@ services:
       context: .
     ports:
       - 3000:3000
-    depends_on:
-      - db
-    links:
-      - db
+    network_mode: "host"
+    # depends_on:
+    #   - db
+    # links:
+    #   - db
     env_file:
       - .env
     command: 'npm run dev'
@@ -21,18 +22,18 @@ services:
       - ./tsconfig.json:/app/tsconfig.json
       - ./next.config.ts:/app/next.config.ts
 
-  db:
-    image: mysql:8.0
-    restart: always
-    environment:
-      MYSQL_DATABASE: ${DB_NAME}
-      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
-    ports:
-      - '52000:${DB_PORT}'
-    volumes:
-      - dog-walking:/var/lib/mysql
-      - ./data:/app/data
+  # db:
+  #   image: mysql:8.0
+  #   restart: always
+  #   environment:
+  #     MYSQL_DATABASE: ${DB_NAME}
+  #     MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+  #   ports:
+  #     - '52000:${DB_PORT}'
+  #   volumes:
+  #     - dog-walking:/var/lib/mysql
+  #     - ./data:/app/data
 
 volumes:
   dog-walking:
-    driver: local
+    # driver: local

@@ -1,19 +1,20 @@
 'use client';
 
-import { cache, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import React from "react";
 import { useForm } from 'react-hook-form';
-import { Button, Callout, TextField } from '@radix-ui/themes';
+import { Button, Callout, Heading, TextField } from '@radix-ui/themes';
 import { Spinner } from '@/app/components';
-
+import './style.css'
+import axios from 'axios';
+import { User } from '@prisma/client';
 
 interface Props {
-  params: { id: string };
+  params: { id: any };
+  user: User
 }
 
-
-export default async function DescPage() {
-
+export default function DescPage({ params, user }: Props) {
   const {
     register,
     control,
@@ -22,37 +23,46 @@ export default async function DescPage() {
   } = useForm();
 
   const [isSubmitting, setSubmitting] = useState(false);
+  const [desc, setDesc] = useState('');
+  const [final, setFinal] = useState<any>(false);
 
-  const [desc, setDesct] = useState('')
-  const [final, setFinal] = useState<any>(false)
 
+  const onSubmit = async (data: any) => {
+    try {
+      const response = await axios.post(`/api/description/${user.id}`, {
+        dogDesc: desc,
+      });
 
-  useEffect(() => {
-    console.log(control)
-  }, [desc])
+    } catch (error) {
+      console.log(`Error: 'Something went wrong'}`);
+    }
 
-  const onSubmit = () => {
-    setFinal(desc)
-  }
+  };
+
 
   return (
     <div>
-      <form className="space-y-3" onSubmit={onSubmit}>
-        <TextField.Root>
+      <form className="space-y-3" onSubmit={handleSubmit((data) => {
+        setSubmitting(true);
+        onSubmit(data);
+        setSubmitting(false);
+      })}>
+        {!user.dogDesc && <TextField.Root>
           <TextField.Input
-            placeholder="Опишите собаку"
+            placeholder="Опишите себя или собаку"
             value={desc}
-            onChange={(e) => setDesct(e.target.value)}
+            onChange={(e) => setDesc(e.target.value)}
           />
-        </TextField.Root>
-        <Button disabled={isSubmitting}>
-          Cохранить
+        </TextField.Root>}
+        {!user.dogDesc && <Button type="submit" disabled={isSubmitting}>
+          Сохранить
           {isSubmitting && <Spinner />}
-        </Button>
+        </Button>}
       </form>
-      <div>
-        {final && {final}}
-      </div>
+      {user.dogDesc && <div className='desc'>
+        <Heading size="4" mb="5">Описание</Heading>
+         <div>{user.dogDesc}</div>
+      </div>}
     </div>
   );
 }

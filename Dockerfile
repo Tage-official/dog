@@ -11,4 +11,4 @@ RUN chmod +x ./start.sh
 
 
 EXPOSE 3000
-CMD ["npm", "run", "dev"]
+# CMD ["npm", "run", "dev"]
